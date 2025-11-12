@@ -13,8 +13,19 @@ function App() {
   return (
     <div className="App">
       <div className="black-nav">
-        <h4>Blog</h4>
+        <h4>React Blog</h4>
       </div>
+
+      <button
+        onClick={() => {
+          let copy = [...title];
+          copy[0] = "여자 코트 추천";
+          setTitle(copy);
+        }}
+      >
+        글수정
+      </button>
+
       <div className="list">
         <h4>
           {title[0]}
