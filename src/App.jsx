@@ -18,7 +18,7 @@ function App() {
     "강남 우동 맛집",
     "파이썬 독학",
   ]);
-  let [good, setGood] = useState(0);
+  let [good, setGood] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
 
   return (
@@ -47,6 +47,30 @@ function App() {
         글수정
       </button>
 
+      {title.map((a, i) => {
+        return (
+          <div className="list" key={i}>
+            <h4
+              onClick={() => {
+                setModal(!modal);
+              }}
+            >
+              {a}{" "}
+              <span
+                onClick={() => {
+                  let copyGood = [...good];
+                  copyGood[i] = copyGood[i] + 1;
+                  setGood(copyGood);
+                }}
+              >
+                👍 {good[i]}
+              </span>
+            </h4>
+            <p>2월 17일 발행</p>
+            {modal ? <Modal /> : null}
+          </div>
+        );
+      })}
       {/* <div className="list">
         <h4>
           {title[0]}
@@ -77,29 +101,6 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       {modal ? <Modal /> : null} */}
-
-      {title.map((a, i) => {
-        return (
-          <div className="list" key={i}>
-            <h4
-              onClick={() => {
-                setModal(!modal);
-              }}
-            >
-              {title[i]}{" "}
-              <span
-                onClick={() => {
-                  setGood(good + 1);
-                }}
-              >
-                👍 {good}
-              </span>
-            </h4>
-            <p>2월 17일 발행</p>
-            {modal ? <Modal /> : null}
-          </div>
-        );
-      })}
     </div>
   );
 }
