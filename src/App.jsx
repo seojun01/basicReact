@@ -47,7 +47,7 @@ function App() {
         글수정
       </button>
 
-      <div className="list">
+      {/* <div className="list">
         <h4>
           {title[0]}
           <span
@@ -76,7 +76,30 @@ function App() {
         </h4>
         <p>2월 17일 발행</p>
       </div>
-      {modal ? <Modal /> : null}
+      {modal ? <Modal /> : null} */}
+
+      {title.map((a, i) => {
+        return (
+          <div className="list" key={i}>
+            <h4
+              onClick={() => {
+                setModal(!modal);
+              }}
+            >
+              {title[i]}{" "}
+              <span
+                onClick={() => {
+                  setGood(good + 1);
+                }}
+              >
+                👍 {good}
+              </span>
+            </h4>
+            <p>2월 17일 발행</p>
+            {modal ? <Modal /> : null}
+          </div>
+        );
+      })}
     </div>
   );
 }
