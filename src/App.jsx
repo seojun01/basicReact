@@ -1,12 +1,21 @@
 import { useState } from "react";
 import "./App.css";
 
-const Modal = () => {
+const Modal = (props) => {
   return (
-    <div className="modal">
-      <h4>제목</h4>
+    <div className="modal" style={{ background: props.color }}>
+      <h4>{props.title[0]}</h4>
       <p>날짜</p>
-      <p>상세내용</p>
+      <p>상세내용</p>{" "}
+      <button
+        onClick={() => {
+          let copy = [...props.title];
+          copy[0] = "여자 코트 추천";
+          props.setTitle(copy);
+        }}
+      >
+        글수정
+      </button>
     </div>
   );
 };
@@ -67,10 +76,12 @@ function App() {
               </span>
             </h4>
             <p>2월 17일 발행</p>
-            {modal ? <Modal /> : null}
           </div>
         );
       })}
+      {modal ? (
+        <Modal title={title} setTitle={setTitle} color={"skyblue"} />
+      ) : null}
       {/* <div className="list">
         <h4>
           {title[0]}
