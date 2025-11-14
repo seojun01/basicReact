@@ -81,9 +81,9 @@ function App() {
       />
       <button
         onClick={() => {
-          if (inputValue.trim() === "") return; // 입력값이 빈 값이라면 무시
-          setPostTitle([...postTitle, inputValue]);
-          setInputValue(""); // 입력값 초기화
+          let copy = [...postTitle];
+          copy.unshift(inputValue);
+          setPostTitle(copy);
           setGood([...good, 0]); // 좋아요 state 추가
         }}
       >
