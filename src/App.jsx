@@ -30,32 +30,13 @@ function App() {
   let [good, setGood] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
   let [title, setTitle] = useState(0);
+  let [inputValue, setInputValue] = useState("");
 
   return (
     <div className="App">
       <div className="black-nav">
         <h4>React Blog</h4>
       </div>
-
-      <button
-        onClick={() => {
-          let copy = [...postTitle];
-          copy.sort();
-          setPostTitle(copy);
-        }}
-      >
-        가나다순 정렬
-      </button>
-
-      <button
-        onClick={() => {
-          let copy = [...postTitle];
-          copy[0] = "여자 코트 추천";
-          setPostTitle(copy);
-        }}
-      >
-        글수정
-      </button>
 
       {postTitle.map((a, i) => {
         return (
@@ -68,7 +49,8 @@ function App() {
             >
               {a}{" "}
               <span
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   let copyGood = [...good];
                   copyGood[i] = copyGood[i] + 1;
                   setGood(copyGood);
@@ -78,9 +60,36 @@ function App() {
               </span>
             </h4>
             <p>2월 17일 발행</p>
+            <button
+              onClick={() => {
+                let copy = [...postTitle];
+                copy.splice(i, 1);
+                setPostTitle(copy);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
+
+      <input
+        type="text"
+        onChange={(e) => {
+          setInputValue(e.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          if (inputValue.trim() === "") return; // 입력값이 빈 값이라면 무시
+          setPostTitle([...postTitle, inputValue]);
+          setInputValue(""); // 입력값 초기화
+          setGood([...good, 0]); // 좋아요 state 추가
+        }}
+      >
+        글 발행
+      </button>
+
       {modal ? (
         <Modal
           title={title}
@@ -89,6 +98,25 @@ function App() {
           color={"skyblue"}
         />
       ) : null}
+      {/* <button
+          onClick={() => {
+            let copy = [...postTitle];
+            copy.sort();
+            setPostTitle(copy);
+          }}
+        >
+          가나다순 정렬
+        </button>
+  
+        <button
+          onClick={() => {
+            let copy = [...postTitle];
+            copy[0] = "여자 코트 추천";
+            setPostTitle(copy);
+          }}
+        >
+          글수정
+        </button> */}
       {/* <div className="list">
         <h4>
           {title[0]}
