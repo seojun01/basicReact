@@ -4,14 +4,14 @@ import "./App.css";
 const Modal = (props) => {
   return (
     <div className="modal" style={{ background: props.color }}>
-      <h4>{props.title[0]}</h4>
+      <h4>{props.postTitle[props.title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>{" "}
       <button
         onClick={() => {
-          let copy = [...props.title];
+          let copy = [...props.postTitle];
           copy[0] = "여자 코트 추천";
-          props.setTitle(copy);
+          props.setPostTitle(copy);
         }}
       >
         글수정
@@ -22,13 +22,14 @@ const Modal = (props) => {
 
 function App() {
   let post = "우동 맛집";
-  let [title, setTitle] = useState([
+  let [postTitle, setPostTitle] = useState([
     "남자 코트 추천",
     "강남 우동 맛집",
     "파이썬 독학",
   ]);
   let [good, setGood] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
+  let [title, setTitle] = useState(0);
 
   return (
     <div className="App">
@@ -38,9 +39,9 @@ function App() {
 
       <button
         onClick={() => {
-          let copy = [...title];
+          let copy = [...postTitle];
           copy.sort();
-          setTitle(copy);
+          setPostTitle(copy);
         }}
       >
         가나다순 정렬
@@ -48,20 +49,21 @@ function App() {
 
       <button
         onClick={() => {
-          let copy = [...title];
+          let copy = [...postTitle];
           copy[0] = "여자 코트 추천";
-          setTitle(copy);
+          setPostTitle(copy);
         }}
       >
         글수정
       </button>
 
-      {title.map((a, i) => {
+      {postTitle.map((a, i) => {
         return (
           <div className="list" key={i}>
             <h4
               onClick={() => {
                 setModal(!modal);
+                setTitle(i);
               }}
             >
               {a}{" "}
@@ -80,7 +82,12 @@ function App() {
         );
       })}
       {modal ? (
-        <Modal title={title} setTitle={setTitle} color={"skyblue"} />
+        <Modal
+          title={title}
+          postTitle={postTitle}
+          setPostTitle={setPostTitle}
+          color={"skyblue"}
+        />
       ) : null}
       {/* <div className="list">
         <h4>
